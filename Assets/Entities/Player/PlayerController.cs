@@ -43,4 +43,17 @@ public class PlayerController : MonoBehaviour {
 		float newX = Mathf.Clamp(transform.position.x, maxLeft, maxRight);
 		transform.position = new Vector3(newX, transform.position.y, transform.position.z);
 	}
+	
+	void OnTriggerEnter2D(Collider2D collider){
+		
+		Projectile missile = collider.gameObject.GetComponent<Projectile>();
+		if(missile){
+//			Debug.Log ("player Collided with Missile");
+			health -= missile.GetDamage();
+			if(health <= 0) {
+				Destroy(gameObject);
+			}
+			missile.Hit(); 		
+		}
+	}
 }

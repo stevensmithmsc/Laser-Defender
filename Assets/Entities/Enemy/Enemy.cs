@@ -20,6 +20,13 @@ public class Enemy : MonoBehaviour {
 	}
 	
 	void Update () {
+		float probability = Time.deltaTime * shotsPerSecond;
+		if (Random.value < probability) {Fire ();}
+	}
 	
+	void Fire() {
+		Vector3 startPosition = transform.position + new Vector3(0, -1, 0);
+		GameObject beam = Instantiate(laserPrefab, startPosition, Quaternion.identity) as GameObject;
+		beam.rigidbody2D.velocity = new Vector3(0, -projectileSpeed, 0);
 	}
 }
