@@ -3,6 +3,9 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
 
+	public GameObject laserPrefab;
+	public float projectileSpeed;
+	public float firingRate = 0.2f;
 	public float moveRate = 5f;
 	public float padding = 1f;
 	public float health = 250;
@@ -19,9 +22,19 @@ public class PlayerController : MonoBehaviour {
 		maxRight = rightmost.x - padding;
 	}
 	
+	void Fire(){
+		Vector3 offset = new Vector3(0, 1, 0);
+		GameObject beam = Instantiate(laserPrefab, this.transform.position + offset, Quaternion.identity) as GameObject;
+		beam.rigidbody2D.velocity = new Vector3(0,projectileSpeed, 0);
+	}
+	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetKey(KeyCode.LeftArrow)) {
+		if(Input.GetKeyDown(KeyCode.Space)) {
+			InvokeRepeating("Fire", 0.000001f, firingRate);
+		} else if(Input.GetKeyUp(KeyCode.Space)){
+			CancelInvoke ("Fire");
+		} else if(Input.GetKey(KeyCode.LeftArrow)) {
 			transform.position += Vector3.left * moveRate * Time.deltaTime;
 		} else if(Input.GetKey(KeyCode.RightArrow)) {
 			transform.position += Vector3.right * moveRate * Time.deltaTime;
