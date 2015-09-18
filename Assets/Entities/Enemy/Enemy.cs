@@ -7,6 +7,9 @@ public class Enemy : MonoBehaviour {
 	public GameObject laserPrefab;
 	public float projectileSpeed = 10;
 	public float shotsPerSecond = 0.5f;
+	public int scorePoints = 150;
+	
+	private ScoreKeeper scoreKeeper;
 	
 	void OnTriggerEnter2D(Collider2D collider){
 		Projectile missile = collider.gameObject.GetComponent<Projectile>();
@@ -14,9 +17,14 @@ public class Enemy : MonoBehaviour {
 			health -= missile.GetDamage();
 			if(health <= 0) {
 				Destroy(gameObject);
+				scoreKeeper.Score(scorePoints);
 			}
 			missile.Hit(); 				
 		}
+	}
+	
+	void Start(){
+		scoreKeeper = GameObject.Find("Score").GetComponent<ScoreKeeper>();
 	}
 	
 	void Update () {
