@@ -8,15 +8,17 @@ public class EnemySpawner : MonoBehaviour {
 	public float height = 5f;
 	public float speed = 5f;
 	public float spawnDelay = 0.5f;
+	public int waveBonusPoints = 225;
 	
 	private Vector3 direction = Vector3.left;
 	private float maxLeft = -5f;
 	private float maxRight = 5f;
+	private ScoreKeeper scoreKeeper;
 
 	// Use this for initialization
 	void Start () {		
 		spawnUntilFull();
-		
+		scoreKeeper = GameObject.Find("Score").GetComponent<ScoreKeeper>();
 		float distance = transform.position.z - Camera.main.transform.position.z;
 		Vector3 leftmost = Camera.main.ViewportToWorldPoint(new Vector3(0,0,distance));
 		Vector3 rightmost = Camera.main.ViewportToWorldPoint(new Vector3(1,0,distance));
@@ -40,6 +42,7 @@ public class EnemySpawner : MonoBehaviour {
 		
 		if(AllMembersDead()){
 			spawnUntilFull();
+			scoreKeeper.Score(waveBonusPoints);
 		}	
 	}
 	

@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour {
 	public float projectileSpeed = 10;
 	public float shotsPerSecond = 0.5f;
 	public int scorePoints = 150;
+	public AudioClip deathSound;
 	
 	private ScoreKeeper scoreKeeper;
 	
@@ -15,12 +16,15 @@ public class Enemy : MonoBehaviour {
 		Projectile missile = collider.gameObject.GetComponent<Projectile>();
 		if(missile){
 			health -= missile.GetDamage();
-			if(health <= 0) {
-				Destroy(gameObject);
-				scoreKeeper.Score(scorePoints);
-			}
+			if(health <= 0) Die();
 			missile.Hit(); 				
 		}
+	}
+	
+	private void Die(){
+		AudioSource.PlayClipAtPoint(deathSound, transform.position);
+		Destroy(gameObject);
+		scoreKeeper.Score(scorePoints);
 	}
 	
 	void Start(){
