@@ -28,6 +28,12 @@ public class PlayerController : MonoBehaviour {
 		beam.rigidbody2D.velocity = new Vector3(0,projectileSpeed, 0);
 	}
 	
+	void Die(){
+		LevelManager man = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+		man.LoadLevel("Win Screen");
+		Destroy(gameObject);
+	}
+	
 	// Update is called once per frame
 	void Update () {
 		if(Input.GetKeyDown(KeyCode.Space)) {
@@ -51,7 +57,7 @@ public class PlayerController : MonoBehaviour {
 //			Debug.Log ("player Collided with Missile");
 			health -= missile.GetDamage();
 			if(health <= 0) {
-				Destroy(gameObject);
+				Die();
 			}
 			missile.Hit(); 		
 		}

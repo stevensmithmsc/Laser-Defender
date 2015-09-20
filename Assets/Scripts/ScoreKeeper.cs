@@ -4,12 +4,13 @@ using UnityEngine.UI;
 
 public class ScoreKeeper : MonoBehaviour {
 
-	private int theScore = 0;
+	public static int theScore = 0;
 	private Text scoreTextControl;
 	
 	void Start(){
 		scoreTextControl = GetComponent<Text>();
 		Reset();
+		UpdateScore();
 	}
 	
 	public void Score(int points){
@@ -17,9 +18,8 @@ public class ScoreKeeper : MonoBehaviour {
 		UpdateScore();
 	}
 	
-	public void Reset(){
+	public static void Reset(){
 		theScore = 0;
-		UpdateScore();
 	}
 	
 	// Update is called once per frame
